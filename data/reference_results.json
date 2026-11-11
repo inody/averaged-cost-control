@@ -1,0 +1,59 @@
+{
+  "description": "Reference values for the Table 1 laws. Static gains are designed on the linearizations and evaluated on the nonlinear oscillators.",
+  "neural": {
+    "nonlinear-vdp": {
+      "averaged": {
+        "nonlinear_evaluation_cost": 1.3786142745463292,
+        "stationarity_residual": 9.575375645831663e-05
+      },
+      "nominal": {
+        "nonlinear_evaluation_cost": 1.7645423710665713,
+        "stationarity_residual": 4.69776169256253e-05
+      }
+    },
+    "nonlinear-stuart-landau": {
+      "averaged": {
+        "nonlinear_evaluation_cost": 0.28451584047868367,
+        "stationarity_residual": 5.6389068389117725e-05
+      },
+      "nominal": {
+        "nonlinear_evaluation_cost": 0.39529786306318565,
+        "stationarity_residual": 4.61012857378984e-05
+      }
+    }
+  },
+  "static_linear": {
+    "linear-vdp": {
+      "averaged": {
+        "gain": [1.8795654642429456, 6.376036712413344],
+        "linearized_evaluation_cost": 1.8878329092704444,
+        "nonlinear_evaluation_cost": 1.56300627479752,
+        "stationarity_residual": 8.824564814990943e-09,
+        "gradient_check_error": 2.4025648137637745e-10
+      },
+      "nominal": {
+        "gain": [1.4495091049316284, 3.984056553323439],
+        "linearized_evaluation_cost": 2.880570443498179,
+        "nonlinear_evaluation_cost": 1.6561237159783957,
+        "stationarity_residual": 2.2562168799922233e-09,
+        "gradient_check_error": 2.28044874650557e-11
+      }
+    },
+    "linear-stuart-landau": {
+      "averaged": {
+        "gain": [-1.9948168784814706, 2.8011330944283848],
+        "linearized_evaluation_cost": 0.4151458411028738,
+        "nonlinear_evaluation_cost": 0.29516696451854935,
+        "stationarity_residual": 9.265668926561332e-09,
+        "gradient_check_error": 2.0091093233531865e-09
+      },
+      "nominal": {
+        "gain": [-0.13822226991504652, 0.9927847652156873],
+        "linearized_evaluation_cost": 1.0756486527294296,
+        "nonlinear_evaluation_cost": 0.38782412381054904,
+        "stationarity_residual": 4.451224111523544e-11,
+        "gradient_check_error": 6.206798963681592e-12
+      }
+    }
+  }
+}

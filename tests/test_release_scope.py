@@ -1,0 +1,69 @@
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_release_has_only_current_reproduction_entry_points():
+    readme = (ROOT / "README.md").read_text()
+    makefile = (ROOT / "Makefile").read_text()
+    assert "make paper-figures" in readme
+    assert "make recompute" in readme
+    assert "make sensitivity" in readme
+    assert "make benchmark" in readme
+    assert "paper-figures:" in makefile
+    assert "joint_uncertainty.run" in makefile
+    assert "uncertainty_sensitivity.run" in makefile
+    assert "uncertainty_sensitivity.render" in makefile
+    assert "render_recorded" in makefile
+
+
+def test_no_development_directories_are_present():
+    for relative in ("docs", "slidev", "runs", "artifacts", "private", "latex"):
+        assert not (ROOT / relative).exists()
+
+
+def test_expected_release_data_are_present():
+    for relative in (
+        "data/warm_starts.json",
+        "data/runtime_scaling.json",
+        "data/reference_results.json",
+        "data/reference_sensitivity.json",
+    ):
+        assert (ROOT / relative).is_file()
+
+
+def test_recorded_runtime_scaling_matches_the_current_laws():
+    timing = json.loads((ROOT / "data" / "runtime_scaling.json").read_text())
+    expected = {
+        "van-der-pol": (-0.000644102427335143, 0.6734120680629152),
+        "stuart-landau": (-0.0015781332285288588, 0.664533703482434),
+    }
+    for case, (linear_exponent, nonlinear_exponent) in expected.items():
+        assert [row["M"] for row in timing["cases"][case]["rows"]] == [1, 4, 16, 64, 128]
+        scaling = timing["cases"][case]["scaling"]
+        assert scaling["linear_moment_total_exponent"] == linear_exponent
+        assert scaling["nonlinear_particle_exponent"] == nonlinear_exponent
+
+
+def test_reference_sensitivity_is_complete_and_certified():
+    summary = json.loads((ROOT / "data" / "reference_sensitivity.json").read_text())
+    assert summary["status"] == "passed"
+    assert summary["unique_law_count"] == 34
+    assert len(summary["records"]) == 36
+    assert {record["model"] for record in summary["records"]} == {
+        "van-der-pol", "stuart-landau",
+    }
+    assert {record["sweep"] for record in summary["records"]} == {
+        "model variance", "initial-state variance",
+    }
+    assert max(record["neural"]["stationarity_residual"] for record in summary["records"]) <= 1e-4
+    assert max(record["static"]["stationarity_residual"] for record in summary["records"]) <= 1e-8
+
+
+def test_release_license_is_declared():
+    assert (ROOT / "LICENSE").read_text().startswith("MIT License")
+    assert (ROOT / "THIRD_PARTY_NOTICES.md").is_file()
+    pyproject = (ROOT / "pyproject.toml").read_text()
+    assert 'license = "MIT"' in pyproject
+    assert 'license-files = ["LICENSE"]' in pyproject

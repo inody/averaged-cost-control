@@ -1,0 +1,27 @@
+[project]
+name = "averaged-cost-control"
+version = "0.1.0"
+description = "Reproduction code for shared-feedback design under model and initial-state uncertainty"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = "==3.11.*"
+dependencies = [
+  "numpy==2.4.2",
+  "scipy==1.17.0",
+  "matplotlib==3.10.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["experiments"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

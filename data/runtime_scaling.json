@@ -1,0 +1,79 @@
+{
+  "cases": {
+    "stuart-landau": {
+      "rows": [
+        {
+          "M": 1,
+          "linear_moment_median_seconds": 0.12708945898339152,
+          "nonlinear_adjoint_median_seconds": 0.22435108409263194
+        },
+        {
+          "M": 4,
+          "linear_moment_median_seconds": 0.12697220803238451,
+          "nonlinear_adjoint_median_seconds": 0.36979195906315
+        },
+        {
+          "M": 16,
+          "linear_moment_median_seconds": 0.1260538330534473,
+          "nonlinear_adjoint_median_seconds": 0.8695628750137985
+        },
+        {
+          "M": 64,
+          "linear_moment_median_seconds": 0.12562837498262525,
+          "nonlinear_adjoint_median_seconds": 2.7765534159261733
+        },
+        {
+          "M": 128,
+          "linear_moment_median_seconds": 0.12667450006119907,
+          "nonlinear_adjoint_median_seconds": 5.439306000014767
+        }
+      ],
+      "scaling": {
+        "fit_definition": "least-squares slope of log(median wall time) against log(M) over M={1,4,16,64,128}",
+        "linear_moment_forward_exponent": -0.002389247042324353,
+        "linear_moment_total_exponent": -0.0015781332285288588,
+        "linear_particle_forward_exponent": 0.5365370020993846,
+        "linear_particle_total_exponent": 0.42866637668479235,
+        "nonlinear_particle_exponent": 0.664533703482434
+      }
+    },
+    "van-der-pol": {
+      "rows": [
+        {
+          "M": 1,
+          "linear_moment_median_seconds": 0.12803616595920175,
+          "nonlinear_adjoint_median_seconds": 0.8250794160412624
+        },
+        {
+          "M": 4,
+          "linear_moment_median_seconds": 0.12679766595829278,
+          "nonlinear_adjoint_median_seconds": 1.4545536669902503
+        },
+        {
+          "M": 16,
+          "linear_moment_median_seconds": 0.12626045802608132,
+          "nonlinear_adjoint_median_seconds": 3.3542962089413777
+        },
+        {
+          "M": 64,
+          "linear_moment_median_seconds": 0.12802520801778883,
+          "nonlinear_adjoint_median_seconds": 10.777341916924343
+        },
+        {
+          "M": 128,
+          "linear_moment_median_seconds": 0.1268747920403257,
+          "nonlinear_adjoint_median_seconds": 21.25807633297518
+        }
+      ],
+      "scaling": {
+        "fit_definition": "least-squares slope of log(median wall time) against log(M) over M={1,4,16,64,128}",
+        "linear_moment_forward_exponent": -0.0004975364626350223,
+        "linear_moment_total_exponent": -0.000644102427335143,
+        "linear_particle_forward_exponent": 0.5355527718216117,
+        "linear_particle_total_exponent": 0.42581070677107885,
+        "nonlinear_particle_exponent": 0.6734120680629152
+      }
+    }
+  },
+  "description": "Recorded timing data used to render the paper runtime-scaling figure. Timing values are hardware dependent."
+}

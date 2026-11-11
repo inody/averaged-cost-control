@@ -1,0 +1,1135 @@
+{
+  "description": "Each averaged controller is redesigned for its uncertainty law; nominal controllers remain fixed because the mean pair is unchanged.",
+  "elapsed_seconds": 2984.4610832919134,
+  "records": [
+    {
+      "law": {
+        "design_particle_count": 8,
+        "final_particle_count": 16,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 0.0,
+        "omega_variance": 0.0,
+        "validation_particle_count": 8
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.3677079969564947,
+        "nominal_cost": 1.3831410387668372,
+        "reduction_percent": 1.1157966814506597,
+        "stationarity_residual": 0.00006502041706923922
+      },
+      "scale": 0.0,
+      "static": {
+        "averaged_cost": 1.3878616380544602,
+        "nominal_cost": 1.3878619211821221,
+        "reduction_percent": 0.000020400275968430035,
+        "stationarity_residual": 2.2778783304033823E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 0.75,
+        "omega_variance": 0.1875,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.371313497098375,
+        "nominal_cost": 1.3945539614760212,
+        "reduction_percent": 1.6665159627848416,
+        "stationarity_residual": 0.00004447167442608868
+      },
+      "scale": 0.25,
+      "static": {
+        "averaged_cost": 1.4043384389274542,
+        "nominal_cost": 1.3965736792872283,
+        "reduction_percent": -0.5559863940861932,
+        "stationarity_residual": 1.1218219339581559E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 1.5,
+        "omega_variance": 0.75,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.3818868808643345,
+        "nominal_cost": 1.4355246759674973,
+        "reduction_percent": 3.7364592891454587,
+        "stationarity_residual": 0.00008920634625830814
+      },
+      "scale": 0.5,
+      "static": {
+        "averaged_cost": 1.4517613405844632,
+        "nominal_cost": 1.4272891428141552,
+        "reduction_percent": -1.7145928625265552,
+        "stationarity_residual": 2.497630158249109E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 2.25,
+        "omega_variance": 1.6875,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.3988668367395283,
+        "nominal_cost": 1.5358811077868477,
+        "reduction_percent": 8.920890448659293,
+        "stationarity_residual": 0.00005201343729499541
+      },
+      "scale": 0.75,
+      "static": {
+        "averaged_cost": 1.5241516583019434,
+        "nominal_cost": 1.5022899585824065,
+        "reduction_percent": -1.455225044582343,
+        "stationarity_residual": 6.4582127562440306E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4215007811997962,
+        "nominal_cost": 1.798106421437354,
+        "reduction_percent": 20.94456900590513,
+        "stationarity_residual": 0.00008600693280236271
+      },
+      "scale": 1.0,
+      "static": {
+        "averaged_cost": 1.614301483406277,
+        "nominal_cost": 1.7000462778392977,
+        "reduction_percent": 5.043674137035818,
+        "stationarity_residual": 8.824564814990943E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.75,
+        "omega_variance": 4.6875,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4487448707886275,
+        "nominal_cost": 2.3768569595218203,
+        "reduction_percent": 39.0478730752023,
+        "stationarity_residual": 0.0000858747979661234
+      },
+      "scale": 1.25,
+      "static": {
+        "averaged_cost": 1.7164258268142671,
+        "nominal_cost": 2.1637572673522785,
+        "reduction_percent": 20.673827295119693,
+        "stationarity_residual": 5.084384857578783E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 4.5,
+        "omega_variance": 6.75,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4796077986919232,
+        "nominal_cost": 3.182670084233128,
+        "reduction_percent": 53.51048774983417,
+        "stationarity_residual": 0.00006258440277639998
+      },
+      "scale": 1.5,
+      "static": {
+        "averaged_cost": 1.8265285470257324,
+        "nominal_cost": 2.9119590221618363,
+        "reduction_percent": 37.274922719560834,
+        "stationarity_residual": 6.753357650879366E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 5.25,
+        "omega_variance": 9.1875,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.5134086377821272,
+        "nominal_cost": 4.109739034257075,
+        "reduction_percent": 63.175067196068106,
+        "stationarity_residual": 0.00006184851812474079
+      },
+      "scale": 1.75,
+      "static": {
+        "averaged_cost": 1.9419024587193687,
+        "nominal_cost": 3.8575157461408436,
+        "reduction_percent": 49.659247388371725,
+        "stationarity_residual": 6.413827385864934E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 6.0,
+        "omega_variance": 12.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.548647397346768,
+        "nominal_cost": 5.090073930134408,
+        "reduction_percent": 69.57514922959332,
+        "stationarity_residual": 0.00007649908023021901
+      },
+      "scale": 2.0,
+      "static": {
+        "averaged_cost": 2.0606349478466255,
+        "nominal_cost": 4.939458497312634,
+        "reduction_percent": 58.28216900764049,
+        "stationarity_residual": 7.159275533519249E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 32,
+        "final_particle_count": 128,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.0,
+        "initial_radius": 0.0,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 32
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4062079346713439,
+        "nominal_cost": 1.7734074709068208,
+        "reduction_percent": 20.705875116659556,
+        "stationarity_residual": 0.00009728644142281695
+      },
+      "scale": 0.0,
+      "static": {
+        "averaged_cost": 1.5979578445925868,
+        "nominal_cost": 1.6877700301877696,
+        "reduction_percent": 5.321352079299032,
+        "stationarity_residual": 5.630109795040639E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.0008333333333333335,
+        "initial_radius": 0.05,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4076314986190552,
+        "nominal_cost": 1.7749566349060968,
+        "reduction_percent": 20.69487947273003,
+        "stationarity_residual": 0.00009495251670898694
+      },
+      "scale": 0.25,
+      "static": {
+        "averaged_cost": 1.5989745503678443,
+        "nominal_cost": 1.6885322071657622,
+        "reduction_percent": 5.303876136792344,
+        "stationarity_residual": 6.004243338630921E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.003333333333333334,
+        "initial_radius": 0.1,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4103800574268495,
+        "nominal_cost": 1.7795961988075266,
+        "reduction_percent": 20.747186447581864,
+        "stationarity_residual": 0.00008216975715045344
+      },
+      "scale": 0.5,
+      "static": {
+        "averaged_cost": 1.6020284838741006,
+        "nominal_cost": 1.6908227800482052,
+        "reduction_percent": 5.2515436402845905,
+        "stationarity_residual": 3.430289233219419E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.007500000000000002,
+        "initial_radius": 0.15000000000000002,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4149881507093056,
+        "nominal_cost": 1.7873110150297997,
+        "reduction_percent": 20.831453574088023,
+        "stationarity_residual": 0.00008275336324087279
+      },
+      "scale": 0.75,
+      "static": {
+        "averaged_cost": 1.6071310860890806,
+        "nominal_cost": 1.6946539401295737,
+        "reduction_percent": 5.164644649148904,
+        "stationarity_residual": 4.829716307441778E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4215007811997962,
+        "nominal_cost": 1.798106421437354,
+        "reduction_percent": 20.94456900590513,
+        "stationarity_residual": 0.00008600693280236271
+      },
+      "scale": 1.0,
+      "static": {
+        "averaged_cost": 1.614301483406277,
+        "nominal_cost": 1.7000462778392977,
+        "reduction_percent": 5.043674137035818,
+        "stationarity_residual": 8.824564814990943E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.020833333333333332,
+        "initial_radius": 0.25,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4299413319430763,
+        "nominal_cost": 1.8120489377223494,
+        "reduction_percent": 21.08704670303013,
+        "stationarity_residual": 0.00005853288639201537
+      },
+      "scale": 1.25,
+      "static": {
+        "averaged_cost": 1.6235665251732332,
+        "nominal_cost": 1.7070293750767418,
+        "reduction_percent": 4.889362252466007,
+        "stationarity_residual": 6.38499608740517E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.03000000000000001,
+        "initial_radius": 0.30000000000000004,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4406574282805507,
+        "nominal_cost": 1.8292885568863517,
+        "reduction_percent": 21.24493301741818,
+        "stationarity_residual": 0.0000743973187335989
+      },
+      "scale": 1.5,
+      "static": {
+        "averaged_cost": 1.634960894727238,
+        "nominal_cost": 1.7156429897406338,
+        "reduction_percent": 4.702732182386794,
+        "stationarity_residual": 7.920779393488786E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.04083333333333334,
+        "initial_radius": 0.35000000000000003,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.453937642600149,
+        "nominal_cost": 1.8500123538915854,
+        "reduction_percent": 21.409300887006253,
+        "stationarity_residual": 0.000049943266547280984
+      },
+      "scale": 1.75,
+      "static": {
+        "averaged_cost": 1.6485271851467422,
+        "nominal_cost": 1.7259391297601647,
+        "reduction_percent": 4.485207112963456,
+        "stationarity_residual": 9.522654276228337E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          1.0,
+          1.0
+        ],
+        "initial_component_variance": 0.053333333333333344,
+        "initial_radius": 0.4,
+        "mean_omega": 1.0,
+        "omega_half_width": 3.0,
+        "omega_variance": 3.0,
+        "validation_particle_count": 256
+      },
+      "model": "van-der-pol",
+      "neural": {
+        "averaged_cost": 1.4704193383352155,
+        "nominal_cost": 1.8743352115421432,
+        "reduction_percent": 21.549820476060873,
+        "stationarity_residual": 0.00008407522106989446
+      },
+      "scale": 2.0,
+      "static": {
+        "averaged_cost": 1.6643160168997726,
+        "nominal_cost": 1.7379852653615746,
+        "reduction_percent": 4.238772901591641,
+        "stationarity_residual": 4.000857853347917E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 8,
+        "final_particle_count": 16,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 0.0,
+        "omega_variance": 0.0,
+        "validation_particle_count": 8
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2189255572697413,
+        "nominal_cost": 0.21925550522374576,
+        "reduction_percent": 0.15048559609381335,
+        "stationarity_residual": 0.00009996923122113088
+      },
+      "scale": 0.0,
+      "static": {
+        "averaged_cost": 0.22002786730254972,
+        "nominal_cost": 0.22002806062041863,
+        "reduction_percent": 0.00008786055213239729,
+        "stationarity_residual": 1.703787111395627E-10
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 0.3625,
+        "omega_variance": 0.04380208333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.22463831171000134,
+        "nominal_cost": 0.22362069951957067,
+        "reduction_percent": -0.45506171504557597,
+        "stationarity_residual": 0.00008774196293415137
+      },
+      "scale": 0.25,
+      "static": {
+        "averaged_cost": 0.22458448149388954,
+        "nominal_cost": 0.2242212905508218,
+        "reduction_percent": -0.16197879433105292,
+        "stationarity_residual": 5.879173259337733E-10
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 0.725,
+        "omega_variance": 0.17520833333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.23780071339085052,
+        "nominal_cost": 0.23977197616002846,
+        "reduction_percent": 0.8221406023956219,
+        "stationarity_residual": 0.00008437588377246952
+      },
+      "scale": 0.5,
+      "static": {
+        "averaged_cost": 0.23914540401834905,
+        "nominal_cost": 0.23963968891117554,
+        "reduction_percent": 0.20626169858270085,
+        "stationarity_residual": 2.0193142158397848E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.0875,
+        "omega_variance": 0.3942187499999999,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2597750482519522,
+        "nominal_cost": 0.28467839496993436,
+        "reduction_percent": 8.747887847482167,
+        "stationarity_residual": 0.00003705090778050035
+      },
+      "scale": 0.75,
+      "static": {
+        "averaged_cost": 0.2650014899367885,
+        "nominal_cost": 0.28214600191953126,
+        "reduction_percent": 6.0764681640367195,
+        "stationarity_residual": 6.82937190132904E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2921743587559265,
+        "nominal_cost": 0.40410391821512637,
+        "reduction_percent": 27.69821187420749,
+        "stationarity_residual": 0.00006012833146185059
+      },
+      "scale": 1.0,
+      "static": {
+        "averaged_cost": 0.3023163647621417,
+        "nominal_cost": 0.3964889200118016,
+        "reduction_percent": 23.75162343675501,
+        "stationarity_residual": 9.26566906533921E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.8125,
+        "omega_variance": 1.0950520833333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.34060534596997893,
+        "nominal_cost": 0.6247461160490162,
+        "reduction_percent": 45.48099824549277,
+        "stationarity_residual": 0.00009845647863404583
+      },
+      "scale": 1.25,
+      "static": {
+        "averaged_cost": 0.35535212537983724,
+        "nominal_cost": 0.6107254001252302,
+        "reduction_percent": 41.81474598780864,
+        "stationarity_residual": 4.3835396423830275E-10
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 2.175,
+        "omega_variance": 1.5768749999999996,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.4089675217582467,
+        "nominal_cost": 0.9267996052281835,
+        "reduction_percent": 55.873144587976334,
+        "stationarity_residual": 0.00009994777229510587
+      },
+      "scale": 1.5,
+      "static": {
+        "averaged_cost": 0.4385023060635247,
+        "nominal_cost": 0.9051296335136062,
+        "reduction_percent": 51.553646038378986,
+        "stationarity_residual": 8.84753784125003E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 2.5375,
+        "omega_variance": 2.1463020833333335,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.5016344377082023,
+        "nominal_cost": 1.2861233373140186,
+        "reduction_percent": 60.99639722300415,
+        "stationarity_residual": 0.00009598062957461018
+      },
+      "scale": 1.75,
+      "static": {
+        "averaged_cost": 0.5727735659961697,
+        "nominal_cost": 1.2568814367448877,
+        "reduction_percent": 54.428989938815775,
+        "stationarity_residual": 9.086792207568806E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 2.9,
+        "omega_variance": 2.8033333333333332,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.6210059255696077,
+        "nominal_cost": 1.685731647880162,
+        "reduction_percent": 63.16104485844269,
+        "stationarity_residual": 0.0000980712769094172
+      },
+      "scale": 2.0,
+      "static": {
+        "averaged_cost": 0.7808083976311099,
+        "nominal_cost": 1.6506464209599043,
+        "reduction_percent": 52.69681091502052,
+        "stationarity_residual": 6.706470712103396E-9
+      },
+      "sweep": "model variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 32,
+        "final_particle_count": 128,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.0,
+        "initial_radius": 0.0,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 32
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2777586033447922,
+        "nominal_cost": 0.3930347075012632,
+        "reduction_percent": 29.329751789439744,
+        "stationarity_residual": 0.00009096448963817616
+      },
+      "scale": 0.0,
+      "static": {
+        "averaged_cost": 0.2873158662632235,
+        "nominal_cost": 0.3863540694028187,
+        "reduction_percent": 25.634052021938576,
+        "stationarity_residual": 4.5734041553835425E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.0008333333333333335,
+        "initial_radius": 0.05,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2789757367539747,
+        "nominal_cost": 0.393725855517595,
+        "reduction_percent": 29.144674436675974,
+        "stationarity_residual": 0.00008999602270121088
+      },
+      "scale": 0.25,
+      "static": {
+        "averaged_cost": 0.28830142781238444,
+        "nominal_cost": 0.38699894621327136,
+        "reduction_percent": 25.503304173468134,
+        "stationarity_residual": 3.21528281777006E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.003333333333333334,
+        "initial_radius": 0.1,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2816324283633417,
+        "nominal_cost": 0.3958018516998054,
+        "reduction_percent": 28.845095808964317,
+        "stationarity_residual": 0.0000759545854953636
+      },
+      "scale": 0.5,
+      "static": {
+        "averaged_cost": 0.2912033855311871,
+        "nominal_cost": 0.38892385598234736,
+        "reduction_percent": 25.125861771666603,
+        "stationarity_residual": 4.199902009505152E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.007500000000000002,
+        "initial_radius": 0.15000000000000002,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2859251882322823,
+        "nominal_cost": 0.3992645582518469,
+        "reduction_percent": 28.387035031562394,
+        "stationarity_residual": 0.00009674317364860574
+      },
+      "scale": 0.75,
+      "static": {
+        "averaged_cost": 0.295906428564246,
+        "nominal_cost": 0.3921010558555293,
+        "reduction_percent": 24.53312120810164,
+        "stationarity_residual": 7.892031334000293E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.013333333333333336,
+        "initial_radius": 0.2,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.2921743587559265,
+        "nominal_cost": 0.40410391821512637,
+        "reduction_percent": 27.69821187420749,
+        "stationarity_residual": 0.00006012833146185059
+      },
+      "scale": 1.0,
+      "static": {
+        "averaged_cost": 0.3023163647621417,
+        "nominal_cost": 0.3964889200118016,
+        "reduction_percent": 23.75162343675501,
+        "stationarity_residual": 9.26566906533921E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.020833333333333332,
+        "initial_radius": 0.25,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.30138123670441097,
+        "nominal_cost": 0.41029234884770877,
+        "reduction_percent": 26.54475825570979,
+        "stationarity_residual": 0.00004946717099607589
+      },
+      "scale": 1.25,
+      "static": {
+        "averaged_cost": 0.31039449169261324,
+        "nominal_cost": 0.402038236375504,
+        "reduction_percent": 22.794783279592206,
+        "stationarity_residual": 9.203135559188169E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.03000000000000001,
+        "initial_radius": 0.30000000000000004,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.3142856584287992,
+        "nominal_cost": 0.41778910273317205,
+        "reduction_percent": 24.77408903852551,
+        "stationarity_residual": 0.00009679186429456532
+      },
+      "scale": 1.5,
+      "static": {
+        "averaged_cost": 0.32014410837537305,
+        "nominal_cost": 0.40869958682545715,
+        "reduction_percent": 21.667621231998794,
+        "stationarity_residual": 9.991988902946503E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.04083333333333334,
+        "initial_radius": 0.35000000000000003,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.330386951075231,
+        "nominal_cost": 0.4265505172390305,
+        "reduction_percent": 22.544472993784076,
+        "stationarity_residual": 0.00008460657706677033
+      },
+      "scale": 1.75,
+      "static": {
+        "averaged_cost": 0.33158128570022605,
+        "nominal_cost": 0.4164307375066269,
+        "reduction_percent": 20.375405599124537,
+        "stationarity_residual": 9.149014490450469E-9
+      },
+      "sweep": "initial-state variance"
+    },
+    {
+      "law": {
+        "design_particle_count": 256,
+        "final_particle_count": 2048,
+        "initial_center": [
+          0.5,
+          0.5
+        ],
+        "initial_component_variance": 0.053333333333333344,
+        "initial_radius": 0.4,
+        "mean_omega": -0.65,
+        "omega_half_width": 1.45,
+        "omega_variance": 0.7008333333333333,
+        "validation_particle_count": 256
+      },
+      "model": "stuart-landau",
+      "neural": {
+        "averaged_cost": 0.3511636444213839,
+        "nominal_cost": 0.4365392182296593,
+        "reduction_percent": 19.557366267000567,
+        "stationarity_residual": 0.00008741841191906019
+      },
+      "scale": 2.0,
+      "static": {
+        "averaged_cost": 0.34471179277709035,
+        "nominal_cost": 0.4252036137349477,
+        "reduction_percent": 18.930182707250516,
+        "stationarity_residual": 7.217202002696155E-9
+      },
+      "sweep": "initial-state variance"
+    }
+  ],
+  "scales": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0
+  ],
+  "status": "passed",
+  "unique_law_count": 34
+}

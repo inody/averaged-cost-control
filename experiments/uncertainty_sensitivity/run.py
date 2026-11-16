@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -57,6 +58,19 @@ INITIAL_SEEDS = {
     "nonlinear-vdp": {"design": 6201, "validation": 6202},
     "nonlinear-stuart-landau": {"design": 7201, "validation": 7202},
 }
+CONTRACT_SCHEMA_VERSION = 1
+CONTRACT_SOURCE_FILES = (
+    "experiments/uncertainty_sensitivity/run.py",
+    "experiments/joint_uncertainty/run.py",
+    "experiments/models.py",
+    "experiments/neural_adjoint.py",
+    "experiments/neural_policy.py",
+    "experiments/linear_moment.py",
+    "experiments/verify_results.py",
+    "experiments/verify_release.py",
+    "pyproject.toml",
+    "uv.lock",
+)
 
 
 def json_default(value):
@@ -72,6 +86,163 @@ def write_json(path: Path, payload: dict) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True, default=json_default) + "\n")
     temporary.replace(path)
+
+
+def canonical_digest(payload: dict) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=json_default).encode()
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def build_campaign_contract(
+    source_summary: Path,
+    *,
+    source_files: tuple[Path, ...] | None = None,
+    warm_starts: Path = WARM_STARTS,
+) -> dict:
+    files = source_files or tuple(ROOT / relative for relative in CONTRACT_SOURCE_FILES)
+    source_hashes = {}
+    for path in files:
+        resolved = Path(path).resolve()
+        try:
+            label = resolved.relative_to(ROOT).as_posix()
+        except ValueError:
+            label = resolved.name
+        source_hashes[label] = digest(resolved)
+    core = {
+        "schema_version": CONTRACT_SCHEMA_VERSION,
+        "baseline_summary_sha256": digest(source_summary),
+        "warm_starts_sha256": digest(warm_starts),
+        "reference_results_sha256": digest(ROOT / "data" / "reference_results.json"),
+        "reference_sensitivity_sha256": digest(ROOT / "data" / "reference_sensitivity.json"),
+        "source_files": source_hashes,
+        "protocol": {
+            "scales": list(SCALES),
+            "low_scales": list(LOW_SCALES),
+            "high_scales": list(HIGH_SCALES),
+            "model_specs": MODEL_SPECS,
+            "initial_seeds": INITIAL_SEEDS,
+            "design_rule": "32 midpoint model nodes by 8 antithetic initial states",
+            "validation_rule": "32 Gauss--Legendre model nodes by 8 independent antithetic initial states",
+            "final_rule": "128 Gauss--Legendre model nodes by 4-by-4 Gauss--Legendre initial states",
+            "continuation": "baseline, then separate lower and higher variance branches",
+            "neural_stationarity_tolerance": 1e-4,
+            "static_stationarity_tolerance": STATIC_STATIONARITY_TOLERANCE,
+            "all_or_nothing_final_evaluation": True,
+        },
+    }
+    return {**core, "contract_sha256": canonical_digest(core)}
+
+
+def ensure_campaign_contract(output: Path, contract: dict) -> Path:
+    path = output / "campaign_contract.json"
+    configuration = output / "configuration.json"
+    if path.exists():
+        try:
+            saved = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError) as error:
+            raise RuntimeError(f"invalid existing sensitivity contract: {path}") from error
+        if saved != contract:
+            raise RuntimeError(f"output directory has an incompatible sensitivity contract: {path}")
+        return path
+    if output.exists() and (configuration.exists() or any(output.iterdir())):
+        raise RuntimeError(f"nonempty sensitivity output has no campaign contract: {output}")
+    output.mkdir(parents=True, exist_ok=True)
+    write_json(path, contract)
+    return path
+
+
+def point_input_contract(
+    campaign_contract_sha256: str,
+    model: str,
+    sweep: str,
+    scale: float,
+    start_theta: np.ndarray,
+    start_gain: np.ndarray,
+) -> dict:
+    core = {
+        "campaign_contract_sha256": campaign_contract_sha256,
+        "model": model,
+        "sweep": sweep,
+        "scale": float(scale),
+        "start_theta_sha256": hashlib.sha256(np.asarray(start_theta, dtype="<f8").tobytes()).hexdigest(),
+        "start_gain_sha256": hashlib.sha256(np.asarray(start_gain, dtype="<f8").tobytes()).hexdigest(),
+    }
+    return {**core, "point_input_sha256": canonical_digest(core)}
+
+
+def validate_reusable_point(saved: dict, expected_input: dict) -> bool:
+    if (
+        saved.get("status") != "passed"
+        or saved.get("campaign_contract_sha256") != expected_input["campaign_contract_sha256"]
+        or saved.get("point_input_contract") != expected_input
+    ):
+        return False
+    try:
+        neural = saved["neural"]
+        static = saved["static"]
+        nominal = saved["nominal_controller"]
+        if not isinstance(nominal["neural_parameters_sha256"], str) or len(nominal["neural_parameters_sha256"]) != 64:
+            return False
+        nominal_gain = np.asarray(nominal["static_gain"], dtype=float)
+        if nominal_gain.shape != (2,) or not np.isfinite(nominal_gain).all():
+            return False
+        values = [
+            neural["averaged_cost"], neural["nominal_cost"], neural["reduction_percent"],
+            neural["optimization"]["selected_tight_stationarity"]["projected_gradient_residual"],
+            static["averaged_cost"], static["nominal_cost"], static["reduction_percent"],
+            static["averaged_design"]["stationarity_residual"],
+        ]
+        if not np.isfinite(np.asarray(values, dtype=float)).all():
+            return False
+        if not (0.0 <= float(values[3]) <= 1e-4 and 0.0 <= float(values[7]) <= STATIC_STATIONARITY_TOLERANCE):
+            return False
+        optimization = neural["optimization"]
+        if optimization.get("stationarity_certified") is not True or optimization.get("optimizer", {}).get("terminated") is not True:
+            return False
+        if optimization["selected_tight_stationarity"].get("status") != "finite" or static["averaged_design"].get("stationarity_certified") is not True:
+            return False
+        theta = np.asarray(optimization["selected_parameters"], dtype=float)
+        gain = np.asarray(static["averaged_design"]["gain"], dtype=float)
+        if theta.shape != (81,) or gain.shape != (2,) or not np.isfinite(theta).all() or not np.isfinite(gain).all():
+            return False
+        identity = (expected_input["model"], expected_input["sweep"], float(expected_input["scale"]))
+        if (saved["model"], saved["sweep"], float(saved["scale"])) != identity:
+            return False
+        point_core = {key: value for key, value in expected_input.items() if key != "point_input_sha256"}
+        if canonical_digest(point_core) != expected_input["point_input_sha256"]:
+            return False
+        data = case_data(MODEL_SPECS[identity[0]]["case"])
+        rules = build_rules(*identity, data)
+        law = saved["law"]
+        expected_law = {
+            "mean_omega": MODEL_SPECS[identity[0]]["mean_omega"],
+            "omega_half_width": rules["omega_half_width"],
+            "omega_variance": rules["omega_variance"],
+            "initial_radius": rules["x0_radius"],
+            "initial_component_variance": rules["initial_component_variance"],
+            "design_particle_count": rules["averaged_design"].size,
+            "validation_particle_count": rules["averaged_validation"].size,
+            "final_particle_count": rules["final"].size,
+        }
+        for key, value in expected_law.items():
+            if not np.isclose(float(law[key]), value, rtol=0.0, atol=2e-13):
+                return False
+        if not np.allclose(law["initial_center"], rules["x0_center"], rtol=0.0, atol=2e-13):
+            return False
+        from experiments.verify_results import _verify_evaluation
+        for method, block in (("neural", neural), ("static", static)):
+            if float(block["averaged_cost"]) <= 0 or float(block["nominal_cost"]) <= 0:
+                return False
+            recomputed = 100.0 * (float(block["nominal_cost"]) - float(block["averaged_cost"])) / float(block["nominal_cost"])
+            if not np.isclose(recomputed, float(block["reduction_percent"]), rtol=2e-12, atol=2e-11):
+                return False
+            for design in ("averaged", "nominal"):
+                cost = _verify_evaluation(block[f"{design}_final"], rules["final"], f"{identity}/{method}/{design}")
+                if not np.isclose(cost, float(block[f"{design}_cost"]), rtol=2e-12, atol=2e-11):
+                    return False
+    except (KeyError, TypeError, ValueError, RuntimeError, IndexError, ZeroDivisionError):
+        return False
+    return True
 
 
 def antithetic_initial_rule(center: np.ndarray, radius: float, seed: int):
@@ -171,7 +342,10 @@ def evaluate_static(data, policy, gain, population, label):
     )
     verification = verify_rollout(result, population, label)
     return {
+        "status": "finite full inventory",
         "cost": float(result["cost"]),
+        "per_particle_cost": result["per_particle_cost"],
+        "successful_subset_averaged": False,
         "nfev": int(result["nfev"]),
         "elapsed_seconds": time.perf_counter() - started,
         "verification": verification,
@@ -246,13 +420,21 @@ def optimize_linear_from_start(data: dict, rules: dict, start_gain: np.ndarray) 
 
 
 def optimize_point(model: str, sweep: str, scale: float, start_theta: np.ndarray,
-                   start_gain: np.ndarray, source: dict, warm_template: dict) -> dict:
+                   start_gain: np.ndarray, source: dict, warm_template: dict,
+                   campaign_contract_sha256: str) -> dict:
     path = point_path(model, sweep, scale)
+    input_contract = point_input_contract(
+        campaign_contract_sha256, model, sweep, scale, start_theta, start_gain
+    )
     if path.exists():
-        saved = json.loads(path.read_text())
-        if saved.get("status") == "passed" and saved.get("source_summary_sha256") == SOURCE_SUMMARY_SHA256:
-            print(f"reuse {model} {sweep} scale={scale:g}", flush=True)
-            return saved
+        try:
+            saved = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError) as error:
+            raise RuntimeError(f"invalid existing sensitivity point: {path}") from error
+        if not validate_reusable_point(saved, input_contract):
+            raise RuntimeError(f"incompatible or invalid existing sensitivity point: {path}")
+        print(f"reuse {model} {sweep} scale={scale:g}", flush=True)
+        return saved
     spec = MODEL_SPECS[model]
     case = spec["case"]
     data = case_data(case)
@@ -302,9 +484,15 @@ def optimize_point(model: str, sweep: str, scale: float, start_theta: np.ndarray
     result = {
         "status": "passed",
         "source_summary_sha256": SOURCE_SUMMARY_SHA256,
+        "campaign_contract_sha256": campaign_contract_sha256,
+        "point_input_contract": input_contract,
         "model": model,
         "sweep": sweep,
         "scale": float(scale),
+        "nominal_controller": {
+            "neural_parameters_sha256": hashlib.sha256(np.asarray(nominal_theta, dtype="<f8").tobytes()).hexdigest(),
+            "static_gain": nominal_gain,
+        },
         "law": {
             "mean_omega": spec["mean_omega"],
             "omega_half_width": rules["omega_half_width"],
@@ -337,6 +525,8 @@ def optimize_point(model: str, sweep: str, scale: float, start_theta: np.ndarray
         },
         "elapsed_seconds": time.perf_counter() - started,
     }
+    if not validate_reusable_point(result, input_contract):
+        raise RuntimeError(f"new sensitivity point failed verification: {path}")
     write_json(path, result)
     print(
         f"DONE {model} {sweep} scale={scale:g} elapsed={result['elapsed_seconds']:.1f}s "
@@ -416,14 +606,19 @@ def main(output: Path = OUTPUT, source_summary: Path = SOURCE_SUMMARY) -> None:
     SOURCE_SUMMARY = source_summary.resolve()
     if not SOURCE_SUMMARY.is_file():
         raise FileNotFoundError(f"baseline summary not found: {SOURCE_SUMMARY}; run make recompute first")
-    OUTPUT.mkdir(parents=True, exist_ok=True)
-    POINTS.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
     SOURCE_SUMMARY_SHA256 = digest(SOURCE_SUMMARY)
+    campaign_contract = build_campaign_contract(SOURCE_SUMMARY)
+    ensure_campaign_contract(OUTPUT, campaign_contract)
+    POINTS.mkdir(parents=True, exist_ok=True)
     source = json.loads(SOURCE_SUMMARY.read_text())
     warm_template = json.loads(WARM_STARTS.read_text())
-    write_json(OUTPUT / "configuration.json", {
-        "source_summary": str(SOURCE_SUMMARY),
+    try:
+        source_summary_label = SOURCE_SUMMARY.relative_to(ROOT).as_posix()
+    except ValueError:
+        source_summary_label = SOURCE_SUMMARY.name
+    configuration = {
+        "source_summary": source_summary_label,
         "source_summary_sha256": SOURCE_SUMMARY_SHA256,
         "warm_starts": str(WARM_STARTS.relative_to(ROOT)),
         "warm_starts_sha256": digest(WARM_STARTS),
@@ -435,7 +630,14 @@ def main(output: Path = OUTPUT, source_summary: Path = SOURCE_SUMMARY) -> None:
         "final_rule": "128 Gauss--Legendre model nodes by 4-by-4 Gauss--Legendre initial states",
         "continuation": "optimize baseline, then continue separately toward lower and higher variance",
         "nominal_restart": "retry from nominal parameters when their validation cost is below the continuation result",
-    })
+        "campaign_contract_sha256": campaign_contract["contract_sha256"],
+    }
+    configuration_path = OUTPUT / "configuration.json"
+    if configuration_path.exists():
+        if json.loads(configuration_path.read_text()) != configuration:
+            raise RuntimeError(f"existing sensitivity configuration is incompatible: {configuration_path}")
+    else:
+        write_json(configuration_path, configuration)
     update_state(started)
 
     for model in MODEL_SPECS:
@@ -445,7 +647,8 @@ def main(output: Path = OUTPUT, source_summary: Path = SOURCE_SUMMARY) -> None:
             source["linear_cases"][spec["linear_case"]]["methods"]["averaged"]["gain"], dtype=float
         )
         baseline = optimize_point(
-            model, "baseline", 1.0, initial, initial_gain, source, warm_template
+            model, "baseline", 1.0, initial, initial_gain, source, warm_template,
+            campaign_contract["contract_sha256"],
         )
         root_theta = selected_theta(baseline)
         root_gain = selected_gain(baseline)
@@ -454,14 +657,20 @@ def main(output: Path = OUTPUT, source_summary: Path = SOURCE_SUMMARY) -> None:
             theta = root_theta.copy()
             gain = root_gain.copy()
             for scale in LOW_SCALES:
-                point = optimize_point(model, sweep, scale, theta, gain, source, warm_template)
+                point = optimize_point(
+                    model, sweep, scale, theta, gain, source, warm_template,
+                    campaign_contract["contract_sha256"],
+                )
                 theta = selected_theta(point)
                 gain = selected_gain(point)
                 update_state(started)
             theta = root_theta.copy()
             gain = root_gain.copy()
             for scale in HIGH_SCALES:
-                point = optimize_point(model, sweep, scale, theta, gain, source, warm_template)
+                point = optimize_point(
+                    model, sweep, scale, theta, gain, source, warm_template,
+                    campaign_contract["contract_sha256"],
+                )
                 theta = selected_theta(point)
                 gain = selected_gain(point)
                 update_state(started)

@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "Averaged-Cost Control with Shared Feedback under Model Uncertainty"
+type: software
+authors:
+  - family-names: Bettiol
+    given-names: Piernicola
+  - family-names: Inoue
+    given-names: Daisuke
+  - family-names: Gómez-Aedo
+    given-names: Matías
+  - family-names: Kalise
+    given-names: Dante
+  - family-names: Vinter
+    given-names: Richard B.
+repository-code: "https://github.com/inody/averaged-cost-control"
+license: MIT
+message: "If you use this reproduction package, please cite the accompanying manuscript."

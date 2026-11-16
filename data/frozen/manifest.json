@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "description": "Compact numerical inputs for pure replay of all six manuscript figures.",
+  "provenance": {
+    "trajectory_arrays": "Generated once from the selected policies and held-out display laws in a completed, independently verified main recomputation. The stored arrays are direct rollout outputs; no PDF or vector extraction was used.",
+    "trajectory_source_summary_sha256": "8ba262481dca77d20a75aa124cd645c300c8be609a5ca7193714fb028cc68324",
+    "trajectory_protocol": "The original 32-particle display laws, display time grids, and tight rollout tolerances were reused without controller reoptimization.",
+    "visual_validation": "The frozen arrays were rendered with the same plotting function and were pixel-identical to the existing four trajectory plots after 100 dpi rasterization. This validation did not supply numerical input data."
+  },
+  "files": [
+    {
+      "path": "data/frozen/trajectory_figures.npz",
+      "bytes": 1779158,
+      "sha256": "04a3905a98049263e4569865fb22167fbb7c00f56f0897303abdfc799050ed08"
+    },
+    {
+      "path": "data/runtime_scaling.json",
+      "bytes": 2832,
+      "sha256": "3a7b7a64857dbbc10f9cfde99a9bc549a216b1356d8f26d89b5e6ce03df850b2"
+    },
+    {
+      "path": "data/reference_sensitivity.json",
+      "bytes": 34277,
+      "sha256": "7dc4cbbe0b0fd60496825ce9360671894587e62b0a94adab195f18604abcc0f9"
+    },
+    {
+      "path": "data/reference_results.json",
+      "bytes": 2138,
+      "sha256": "921e3ea29e1fcc24ee5548c233784d7c4efa33b6097dafaedbe732e22353b56c"
+    }
+  ],
+  "table": {
+    "manuscript_number": 1,
+    "inputs": ["data/reference_results.json"],
+    "command": "uv run python -m experiments.paper_correspondence"
+  },
+  "figures": [
+    {
+      "manuscript_number": 1,
+      "filename": "nonlinear-vdp-direct-cost-neural-feedback-full-results.pdf",
+      "inputs": ["data/frozen/trajectory_figures.npz:vdp_neural_*"],
+      "command": "make figures"
+    },
+    {
+      "manuscript_number": 2,
+      "filename": "initial-state-runtime-scaling.pdf",
+      "inputs": ["data/runtime_scaling.json"],
+      "command": "make figures"
+    },
+    {
+      "manuscript_number": 3,
+      "filename": "nonlinear-stuart-landau-direct-cost-neural-feedback-full-results.pdf",
+      "inputs": ["data/frozen/trajectory_figures.npz:stuart_neural_*"],
+      "command": "make figures"
+    },
+    {
+      "manuscript_number": 4,
+      "filename": "nonlinear-vdp-static-linear-feedback.pdf",
+      "inputs": ["data/frozen/trajectory_figures.npz:vdp_static_*"],
+      "command": "make figures"
+    },
+    {
+      "manuscript_number": 5,
+      "filename": "nonlinear-stuart-landau-static-linear-feedback.pdf",
+      "inputs": ["data/frozen/trajectory_figures.npz:stuart_static_*"],
+      "command": "make figures"
+    },
+    {
+      "manuscript_number": 6,
+      "filename": "uncertainty-variance-cost-sensitivity.pdf",
+      "inputs": ["data/reference_sensitivity.json"],
+      "command": "make figures"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - name: Install figure-system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cm-super poppler-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+      - name: Install frozen Python environment
+        run: uv sync --frozen --extra dev
+      - name: Run tests
+        run: uv run pytest
+      - name: Validate frozen inputs
+        run: uv run python -m experiments.frozen_figures --verify-manifest
+      - name: Replay all six manuscript figures
+        run: uv run python -m experiments.frozen_figures --output outputs/ci-figures
+      - name: Verify exact figure inventory and frozen records
+        run: uv run python -m experiments.verify_release --figures outputs/ci-figures

@@ -4,18 +4,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_release_has_only_current_reproduction_entry_points():
+def test_release_has_fast_and_full_reproduction_entry_points():
     readme = (ROOT / "README.md").read_text()
     makefile = (ROOT / "Makefile").read_text()
-    assert "make paper-figures" in readme
-    assert "make recompute" in readme
-    assert "make sensitivity" in readme
-    assert "make benchmark" in readme
-    assert "paper-figures:" in makefile
+    for command in ("make figures", "make verify", "make reproduce", "make recompute", "make sensitivity", "make benchmark"):
+        assert command in readme
+    for target in ("figures:", "reproduce:", "recompute:", "sensitivity:", "benchmark:", "verify:"):
+        assert target in makefile
+    assert "experiments.frozen_figures" in makefile
     assert "joint_uncertainty.run" in makefile
     assert "uncertainty_sensitivity.run" in makefile
-    assert "uncertainty_sensitivity.render" in makefile
-    assert "render_recorded" in makefile
+    assert "verify_release" in makefile
 
 
 def test_no_development_directories_are_present():
@@ -29,6 +28,10 @@ def test_expected_release_data_are_present():
         "data/runtime_scaling.json",
         "data/reference_results.json",
         "data/reference_sensitivity.json",
+        "data/frozen/trajectory_figures.npz",
+        "data/frozen/manifest.json",
+        "CITATION.cff",
+        ".github/workflows/tests.yml",
     ):
         assert (ROOT / relative).is_file()
 

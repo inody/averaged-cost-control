@@ -1,103 +1,86 @@
 # Averaged-cost control with shared feedback
 
-This repository reproduces the numerical results and figures for the paper
-*Averaged-Cost Control with Shared Feedback under Model Uncertainty*.
+This repository reproduces the numerical evidence for *Averaged-Cost Control with Shared Feedback under Model Uncertainty*. It implements a nonlinear adjoint method for time-dependent neural feedback and a linear moment method for static feedback designed on oscillator linearizations. Both controller classes are evaluated on the original nonlinear Van der Pol and Stuart--Landau systems.
 
-It implements two methods for the same finite-horizon shared-feedback design problem:
+## Requirements
 
-- **Nonlinear adjoint method:** time-dependent neural feedback optimized with forward state solves, backward adjoints, and a projected policy-parameter residual.
-- **Linear moment method:** static linear feedback designed on a first-order linearization using conditional second moments, Lyapunov evaluation, and Anderson--Moore updates with Armijo backtracking.
+- Python 3.11 and [uv](https://docs.astral.sh/uv/)
+- A LaTeX installation with Times-compatible fonts
+- Poppler (`pdfinfo`) for PDF integrity checks
 
-Both controller classes are evaluated on the original nonlinear Van der Pol and Stuart--Landau oscillators. The experiments include uncertainty in the model parameter and initial state.
-
-## Numerical laws
-
-- Van der Pol: `omega ~ Uniform[-2, 4]` and `xi = (1, 1) + Uniform([-0.2, 0.2]^2)`.
-- Stuart--Landau: `omega ~ Uniform[-2.1, 0.8]` and `xi = (0.5, 0.5) + Uniform([-0.2, 0.2]^2)`.
-- The nominal design fixes both quantities at their means.
-
-## Environment
-
-The maintained environment uses Python 3.11, NumPy 2.4.2, SciPy 1.17.0, and Matplotlib 3.10.8. A LaTeX installation is required for publication-style figure text.
+The Python environment is locked to NumPy 2.4.2, SciPy 1.17.0, and Matplotlib 3.10.8.
 
 ```bash
 make setup
 ```
 
-## Recompute the main paper results and figures
+## Fast workflow: replay all six figures
 
 ```bash
-make paper-figures
+make figures
 ```
 
-This command starts from the fixed neural-policy warm starts in `data/warm_starts.json` and recomputes:
-
-- averaged and nominal time-dependent neural feedback;
-- averaged and nominal static linear feedback;
-- independent final-law evaluations on the nonlinear oscillators;
-- the four nonlinear trajectory figures;
-- stationarity residuals and linear gradient checks.
-
-It also renders the runtime-scaling figure from the recorded hardware timings and Figure 6 from the committed 34-law sensitivity summary. The six PDFs are collected under:
-
-```text
-outputs/paper-figures/figures/
-```
-
-The neural optimization uses a 400-iteration cap and can take several minutes. Existing output directories are not overwritten.
-
-## Recompute Figure 6 from controller redesigns
-
-After `make recompute`, run:
-
-```bash
-make sensitivity
-```
-
-For each plotted model-parameter or initial-state variance, this command redesigns the averaged neural policy and averaged static gain for that distribution, evaluates both averaged and nominal controllers on the same distribution, and renders `uncertainty-variance-cost-sensitivity.pdf`. The nominal controllers remain fixed because the mean parameter--initial-state pair is unchanged.
-
-The sweep contains 34 unique uncertainty laws and may take tens of minutes. It is resumable: completed point files under `outputs/uncertainty-sensitivity/points/` are reused.
-
-To render Figure 6 directly from the committed reference summary without rerunning the optimizations:
-
-```bash
-make sensitivity-figure
-```
-
-## Other entry points
-
-Recompute the Table 1 laws and four trajectory figures without recorded-data figures:
-
-```bash
-make recompute
-```
-
-Run both the main recomputation and the full Figure 6 redesign sweep:
-
-```bash
-make full-recompute
-```
-
-Re-run the hardware-dependent scaling benchmark:
-
-```bash
-make benchmark
-```
-
-Absolute wall times are not expected to match the paper exactly. The reproducible claim is the contrast between particle-dependent nonlinear work and fixed-dimensional linear moment propagation.
-
-## Verification
+This regenerates all six manuscript PDFs under `outputs/frozen-figures/` from compact committed numerical inputs. It runs no optimization and no ODE integration. `data/frozen/manifest.json` maps each manuscript figure to its inputs and records SHA-256 checksums.
 
 ```bash
 make verify
 ```
 
-The checks cover model definitions, uncertainty laws, warm-start inventory, nonlinear adjoint gradients, linear moment gradients, sensitivity-data completeness, and release scope. After a numerical recomputation, `make verify-results` compares its costs, gains, residuals, inventories, and figure names with the release references.
+`make verify` runs the tests, validates the frozen-data manifest and arrays, replays all six figures in a temporary directory, checks the exact filename inventory, reads every PDF with Poppler, verifies the 34-law/36-record sensitivity structure, and regenerates the Table 1 display values. It does not start the long numerical campaigns.
 
-## Repository scope
+## Full numerical workflow
 
-The repository contains only the code, fixed warm starts, recorded timing and sensitivity data, and tests needed for paper reproduction. Intermediate exploratory studies, presentation sources, manuscript sources, and development records are intentionally excluded.
+```bash
+make reproduce
+```
 
-## License
+This starts from the fixed distributed neural-policy warm starts in `data/warm_starts.json`, recomputes the main averaged and nominal controllers, runs the complete 34-law sensitivity redesign sweep, renders six figures, regenerates Table 1 rows, and performs final numerical and structural verification. Existing output is not overwritten. The sensitivity stage is resumable only when its source, lock file, warm starts, seeds, protocol, baseline summary, and continuation inputs match the saved campaign contract.
 
-The reproduction code is distributed under the [MIT License](LICENSE). Third-party packages remain under their respective licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The full workflow can take tens of minutes. It deliberately excludes the machine-dependent timing benchmark. The fixed warm starts are part of the declared reproduction boundary: the earlier teacher-training process that produced them is not regenerated.
+
+Useful staged aliases are:
+
+```bash
+make recompute       # main four-controller study and strict result checks
+make sensitivity     # full sensitivity sweep; resumes compatible point files
+make verify-results  # recheck a completed main study
+make full-recompute  # alias for make reproduce
+```
+
+## Timing records and optional benchmark
+
+Figure 2 uses `data/runtime_scaling.json`, which records measurements from the original hardware. Absolute wall times are not expected to transfer across machines; the relevant comparison is the observed scaling contrast between particle propagation and fixed-dimensional moment propagation.
+
+To collect a new, machine-specific timing record after `make recompute`:
+
+```bash
+make benchmark
+```
+
+Timing is kept outside numerical acceptance checks.
+
+## Paper correspondence
+
+Generate the Table 1 rows from the committed reference values:
+
+```bash
+uv run python -m experiments.paper_correspondence
+```
+
+An optional local manuscript checkout can be checked without becoming a public dependency:
+
+```bash
+uv run python -m experiments.paper_correspondence --manuscript /path/to/body.tex
+```
+
+The six figure numbers, filenames, inputs, and replay command are listed in `data/frozen/manifest.json`.
+
+## Numerical laws
+
+- Van der Pol: `omega ~ Uniform[-2, 4]`, `xi = (1, 1) + Uniform([-0.2, 0.2]^2)`.
+- Stuart--Landau: `omega ~ Uniform[-2.1, 0.8]`, `xi = (0.5, 0.5) + Uniform([-0.2, 0.2]^2)`.
+- Nominal design fixes the model parameter and initial state at their means.
+
+## Citation and license
+
+Citation metadata are provided in [`CITATION.cff`](CITATION.cff). The reproduction code is distributed under the [MIT License](LICENSE); third-party notices are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

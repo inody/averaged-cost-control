@@ -18,7 +18,8 @@ jobs:
       - name: Install figure-system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cm-super poppler-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y cm-super dvipng ghostscript poppler-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+          for tool in latex dvipng gs pdfinfo; do command -v "$tool"; done
       - name: Install frozen Python environment
         run: uv sync --frozen --extra dev
       - name: Run tests

@@ -10,6 +10,13 @@ from experiments.verify_release import verify_sensitivity
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_ci_installs_pdf_and_tex_png_rendering_dependencies():
+    workflow = (ROOT / ".github" / "workflows" / "tests.yml").read_text()
+    install = next(line for line in workflow.splitlines() if "sudo apt-get install" in line)
+    assert {"dvipng", "ghostscript", "poppler-utils", "texlive-latex-base", "texlive-latex-extra", "texlive-fonts-recommended", "cm-super"} <= set(install.split())
+    assert 'for tool in latex dvipng gs pdfinfo; do command -v "$tool"; done' in workflow
+
+
 def test_frozen_manifest_covers_exactly_six_manuscript_figures():
     manifest = load_manifest()
     assert tuple(record["filename"] for record in manifest["figures"]) == EXPECTED_FIGURES

@@ -5,8 +5,14 @@ This repository reproduces the numerical evidence for *Averaged-Cost Control wit
 ## Requirements
 
 - Python 3.11 and [uv](https://docs.astral.sh/uv/)
-- A LaTeX installation with Times-compatible fonts
+- A LaTeX installation with Times-compatible fonts, `dvipng`, and Ghostscript (`gs`) for PDF/PNG figure rendering
 - Poppler (`pdfinfo`) for PDF integrity checks
+
+On Ubuntu, install the figure-system dependencies with:
+
+```bash
+sudo apt-get install -y cm-super dvipng ghostscript poppler-utils texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+```
 
 The Python environment is locked to NumPy 2.4.2, SciPy 1.17.0, and Matplotlib 3.10.8.
 

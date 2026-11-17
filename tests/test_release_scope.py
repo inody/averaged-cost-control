@@ -64,6 +64,28 @@ def test_reference_sensitivity_is_complete_and_certified():
     assert max(record["static"]["stationarity_residual"] for record in summary["records"]) <= 1e-8
 
 
+def test_published_paper_links_and_preferred_citation_are_present():
+    readme = (ROOT / "README.md").read_text()
+    citation = (ROOT / "CITATION.cff").read_text()
+    paper = citation.split("\npreferred-citation:\n", 1)[1]
+    assert "https://arxiv.org/abs/2611.19019" in readme
+    assert "https://doi.org/10.48550/arXiv.2611.19019" in readme
+    assert '  type: article\n' in paper
+    assert '  title: "Averaged-Cost Control with Shared Feedback under Model Uncertainty"' in paper
+    assert "  year: 2026\n" in paper
+    assert "  journal: arXiv\n" in paper
+    assert '  doi: "10.48550/arXiv.2611.19019"' in paper
+    assert '  url: "https://arxiv.org/abs/2611.19019"' in paper
+    for family, given in (
+        ("Bettiol", "Piernicola"),
+        ("Inoue", "Daisuke"),
+        ("Gómez-Aedo", "Matías"),
+        ("Kalise", "Dante"),
+        ("Vinter", "Richard B."),
+    ):
+        assert f"    - family-names: {family}\n      given-names: {given}\n" in paper
+
+
 def test_release_license_is_declared():
     assert (ROOT / "LICENSE").read_text().startswith("MIT License")
     assert (ROOT / "THIRD_PARTY_NOTICES.md").is_file()

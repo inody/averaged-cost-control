@@ -14,4 +14,22 @@ authors:
     given-names: Richard B.
 repository-code: "https://github.com/inody/averaged-cost-control"
 license: MIT
-message: "If you use this reproduction package, please cite the accompanying manuscript."
+message: "If you use this reproduction package, please cite the paper listed below."
+preferred-citation:
+  type: article
+  title: "Averaged-Cost Control with Shared Feedback under Model Uncertainty"
+  authors:
+    - family-names: Bettiol
+      given-names: Piernicola
+    - family-names: Inoue
+      given-names: Daisuke
+    - family-names: Gómez-Aedo
+      given-names: Matías
+    - family-names: Kalise
+      given-names: Dante
+    - family-names: Vinter
+      given-names: Richard B.
+  year: 2026
+  journal: arXiv
+  doi: "10.48550/arXiv.2611.19019"
+  url: "https://arxiv.org/abs/2611.19019"

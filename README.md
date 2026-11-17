@@ -2,6 +2,8 @@
 
 This repository reproduces the numerical evidence for *Averaged-Cost Control with Shared Feedback under Model Uncertainty*. It implements a nonlinear adjoint method for time-dependent neural feedback and a linear moment method for static feedback designed on oscillator linearizations. Both controller classes are evaluated on the original nonlinear Van der Pol and Stuart--Landau systems.
 
+Paper: [arXiv:2611.19019](https://arxiv.org/abs/2611.19019) · [DOI: 10.48550/arXiv.2611.19019](https://doi.org/10.48550/arXiv.2611.19019).
+
 ## Requirements
 
 - Python 3.11 and [uv](https://docs.astral.sh/uv/)
